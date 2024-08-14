@@ -16,29 +16,10 @@ func main() {
 		os.Exit(1)
 	}
 	frequencyTable := NewFrequencyTable(string(file))
-
 	t := NewHuffman(frequencyTable)
-	// fmt.Println("initTree -> ", len(t))
-	// fmt.Println(frequencyTable)
-	h := huffman(t)
-	h.Encode("")
-	leaves := h.GetLeaves()
-
-	fmt.Println(leaves)
-	fmt.Println()
-	header := createHeader(leaves)
-	fmt.Println(header)
-	fmt.Println()
-	encs := getEncodings(leaves)
-	fmt.Println(encs)
-}
-
-func getEncodings(nodes []*Node) map[byte]string {
-	encs := map[byte]string{}
-	for _, node := range nodes {
-		encs[node.Char] = node.Encoding
-	}
-	return encs
+	root := Huffmanize(t)
+	root.Encode("")
+	fmt.Println(root.GetLeaves())
 }
 
 // frequencyTable := map[byte]int{

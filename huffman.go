@@ -105,11 +105,11 @@ func (root *Node) GetLeaves() []*Node {
 	return leaves
 }
 
-func createHeader(nodes []*Node) string {
+func CreateHeader(leaves []*Node) string {
 	var header = ""
-	var n = len(nodes)
-	for i, node := range nodes {
-		s := fmt.Sprintf("%v:%s", node.Char, node.Encoding)
+	var n = len(leaves)
+	for i, leave := range leaves {
+		s := fmt.Sprintf("%v:%s", leave.Char, leave.Encoding)
 		if i == n-1 {
 			header += s
 		} else {
