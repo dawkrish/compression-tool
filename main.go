@@ -21,8 +21,13 @@ func main() {
 	root := Huffmanize(t)
 	root.Encode("")
 
-	fmt.Println(frequencyTable)
+	// fmt.Println(frequencyTable)
 	FillFrequencyTable(root.GetLeaves(), frequencyTable)
 	fmt.Println(frequencyTable)
-	WriteOutputFile(string(file), frequencyTable)
+	bitString := CreateBitString(string(file), frequencyTable)
+	// fmt.Println("inputString: ", string(file))
+	// fmt.Println("bitString: ", bitString)
+	// decodedString := root.Decode(&root, bitString, "")
+	// fmt.Println("decodedString: ", decodedString)
+	WriteOutputFile(string(file), bitString)
 }

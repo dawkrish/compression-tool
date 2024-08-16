@@ -88,6 +88,21 @@ func (root *Node) Encode(prefix string) {
 	return
 }
 
+func (root *Node) Decode(node *Node, bitString string, decodedString string) string {
+	if bitString == "" {
+		return decodedString
+	}
+	if node.isLeaf {
+		return root.Decode(root, bitString, decodedString+string(node.Char))
+	}
+
+	if bitString[0] == '0' {
+		return root.Decode(node.Left, bitString[1:], decodedString)
+	} else {
+		return root.Decode(node.Right, bitString[1:], decodedString)
+	}
+}
+
 func (root *Node) GetLeaves() []*Node {
 	if root == nil {
 		return []*Node{}
