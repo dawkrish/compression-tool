@@ -15,11 +15,16 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
 	frequencyTable := NewFrequencyTable(string(file))
 	t := NewHuffman(frequencyTable)
 	root := Huffmanize(t)
 	root.Encode("")
-	fmt.Println(root.GetLeaves())
+
+	fmt.Println(frequencyTable)
+	FillFrequencyTable(root.GetLeaves(), frequencyTable)
+	fmt.Println(frequencyTable)
+	WriteOutputFile(frequencyTable)
 }
 
 // frequencyTable := map[byte]int{
