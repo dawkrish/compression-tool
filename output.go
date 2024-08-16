@@ -20,27 +20,19 @@ func CreateHeader(leaves []*Node) string {
 	return header
 }
 
-func WriteOutputFile(freqTable FrequencyTable) {
-	file, err := os.Create("compressed.txt")
+func WriteOutputFile(input string, freqTable FrequencyTable) {
+	output, err := os.Create("compressed.txt")
 	if err != nil {
 		fmt.Println("err WriteOutputFile: ", err)
 		return
 	}
 	compressedBites := []byte{}
-	for _, v := range freqTable {
-		encs := []byte{}
-		ns := v.Encoding / 255
-		mod := v.Encoding % 255
-		for range ns {
-			encs = append(encs, 255)
-		}
-		encs = append(encs, byte(mod))
-		// fmt.Println(v.Encoding, encs)
-		compressedBites = append(compressedBites, encs...)
+
+	for i := 0; i < len(input); i++ {
+		compressedBites = append(compressedBites, freqTable[input[i]].ArrayEncoding...)
 	}
-	fmt.Println(compressedBites)
-	fmt.Println(len(compressedBites))
-	_, err = file.Write(compressedBites)
+
+	_, err = output.Write(compressedBites)
 	if err != nil {
 		fmt.Println("err in Write: ", err)
 	}

@@ -24,18 +24,5 @@ func main() {
 	fmt.Println(frequencyTable)
 	FillFrequencyTable(root.GetLeaves(), frequencyTable)
 	fmt.Println(frequencyTable)
-	WriteOutputFile(frequencyTable)
+	WriteOutputFile(string(file), frequencyTable)
 }
-
-// frequencyTable := map[byte]int{
-// 	'c': 32,
-// 	'd': 42,
-// 	'e': 120,
-// 	'k': 7,
-// 	'l': 42,
-// 	'm': 24,
-// 	'u': 37,
-// 	'z': 2,
-// }
-// printFreqTable(frequencyTable)
-// fmt.Println()
