@@ -24,10 +24,13 @@ func main() {
 	// fmt.Println(frequencyTable)
 	FillFrequencyTable(root.GetLeaves(), frequencyTable)
 	fmt.Println(frequencyTable)
-	bitString := CreateBitString(string(file), frequencyTable)
 	// fmt.Println("inputString: ", string(file))
 	// fmt.Println("bitString: ", bitString)
 	// decodedString := root.Decode(&root, bitString, "")
 	// fmt.Println("decodedString: ", decodedString)
-	WriteOutputFile(string(file), bitString)
+	Compress(string(file), frequencyTable)
+
+	fmt.Println()
+	file2, _ := os.ReadFile("result.txt")
+	Decompress(string(file2))
 }
