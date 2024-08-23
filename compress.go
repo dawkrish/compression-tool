@@ -9,7 +9,6 @@ import (
 func CreateHeader(freqTable FrequencyTable) string {
 	var header = ""
 	for k, v := range freqTable {
-		// h := fmt.Sprintf("%d:%v,", k, v.StringEncoding)
 		h := fmt.Sprintf("%v:%d,", v.StringEncoding, k)
 		header += h
 	}
@@ -17,7 +16,7 @@ func CreateHeader(freqTable FrequencyTable) string {
 	return header
 }
 
-func Compress(input string, freqTable FrequencyTable) {
+func Compress(input string, freqTable FrequencyTable, newFileName string) {
 	header := CreateHeader(freqTable)
 	var compressedBytes = []byte{}
 	compressedBytes = append(compressedBytes, []byte(header)...)
@@ -45,8 +44,6 @@ func Compress(input string, freqTable FrequencyTable) {
 	}
 	if bitStringLen != 0 {
 		b, err := strconv.ParseUint(bitString, 2, 8)
-		b2, _ := strconv.ParseUint(bitString, 2, bitStringLen)
-		fmt.Println("during compression-niggggga:", bitString, b, b2)
 		if err != nil {
 			fmt.Println("err strconv.ParseUint: ", err)
 		}
@@ -54,7 +51,7 @@ func Compress(input string, freqTable FrequencyTable) {
 
 	}
 
-	outputFile, err := os.Create("result.txt")
+	outputFile, err := os.Create(newFileName)
 	if err != nil {
 		fmt.Println("err os.Create: ", err)
 	}

@@ -12,7 +12,7 @@ import (
 2) Use the decode function
 */
 
-func Decompress(input string) {
+func Decompress(input string, newFileName string) {
 	lines := strings.Split(input, "\n")
 
 	header := lines[0]
@@ -34,10 +34,14 @@ func Decompress(input string) {
 	content := strings.Join(lines[1:], "\n")
 	contentBitString := ""
 	decompressedBytes := []byte{}
+	last_i := len(content) - 1
 
 	for i := 0; i < len(content); i++ {
-		contentBitString += fmt.Sprintf("%08b", content[i])
-		// fmt.Println("oldlen: ", len(contentBitString))
+		if i == last_i {
+			contentBitString += fmt.Sprintf("%b", content[i])
+		} else {
+			contentBitString += fmt.Sprintf("%08b", content[i])
+		}
 		var possibleKey = ""
 		for j := 0; j < len(contentBitString); j++ {
 			possibleKey += string(contentBitString[j])
@@ -47,23 +51,10 @@ func Decompress(input string) {
 				possibleKey = ""
 			}
 		}
-
 		contentBitString = possibleKey
-		// fmt.Println("newlen: ", len(contentBitString))
 	}
 
-	if len(contentBitString) != 0 {
-		fmt.Println("leftbitstring:", contentBitString)
-		fmt.Println(lookup)
-		entry, ok := lookup[contentBitString]
-		fmt.Println(entry, ok)
-		if ok {
-			decompressedBytes = append(decompressedBytes, entry)
-			contentBitString = ""
-		}
-	}
-
-	outputFile, err := os.Create("deresult.txt")
+	outputFile, err := os.Create(newFileName)
 	if err != nil {
 		fmt.Println("err os.Create: ", err)
 	}
@@ -72,3 +63,14 @@ func Decompress(input string) {
 		fmt.Println("err in Write: ", err)
 	}
 }
+
+// if len(contentBitString) != 0 {
+// 	fmt.Println("leftbitstring:", contentBitString)
+// 	fmt.Println(lookup)
+// 	entry, ok := lookup[contentBitString]
+// 	fmt.Println(entry, ok)
+// 	if ok {
+// 		decompressedBytes = append(decompressedBytes, entry)
+// 		contentBitString = ""
+// 	}
+// }
