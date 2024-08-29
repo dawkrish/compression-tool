@@ -21,6 +21,7 @@ func main() {
 				fmt.Println(err)
 				continue
 			}
+
 			freqTable := NewFrequencyTable(string(file))
 			t := NewHuffman(freqTable)
 			root := Huffmanize(t)
@@ -28,6 +29,19 @@ func main() {
 			FillFrequencyTable(root.GetLeaves(), freqTable)
 			newFileName := fmt.Sprintf("%v_compressed.txt", fileName)
 			Compress(string(file), freqTable, newFileName)
+
+			fi, err := os.Stat(fileName)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Printf("%v: %d bytes\n", fileName, fi.Size())
+
+			fi, err = os.Stat(newFileName)
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Printf("%v: %d bytes\n", newFileName, fi.Size())
+			fmt.Println()
 		}
 	} else {
 		for _, fileName := range args {
@@ -40,24 +54,4 @@ func main() {
 			Decompress(string(file), newFileName)
 		}
 	}
-
-	fmt.Println(args)
 }
-
-// frequencyTable := NewFrequencyTable(string(file))
-// t := NewHuffman(frequencyTable)
-// root := Huffmanize(t)
-// root.Encode("")
-
-// // fmt.Println(frequencyTable)
-// FillFrequencyTable(root.GetLeaves(), frequencyTable)
-// fmt.Println(frequencyTable)
-// // fmt.Println("inputString: ", string(file))
-// // fmt.Println("bitString: ", bitString)
-// // decodedString := root.Decode(&root, bitString, "")
-// // fmt.Println("decodedString: ", decodedString)
-// Compress(string(file), frequencyTable)
-
-// fmt.Println()
-// file2, _ := os.ReadFile("result.txt")
-// Decompress(string(file2))
